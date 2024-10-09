@@ -38,4 +38,29 @@ void print_gdt_content(gdt_reg_t gdtr_ptr) {
 
 void tp() {
 	// TODO
+	
+	gdt_reg_t gdtr;
+
+	get_gdtr(gdtr);
+
+	debug("GDT addr: 0x%x ", (unsigned int) gdtr.addr);
+	debug("limit: %d\n" , gdtr.limit);
+
+	print_gdt_content(gdtr);
+
+	debug("SS: %d\n", get_ss());
+	debug("DS: %d\n", get_ds());
+	debug("ES: %d\n", get_es());
+	debug("FS: %d\n", get_fs());
+	debug("GS: %d\n", get_gs());
+	debug("CS: %d\n", get_seg_sel(cs));
+
+	seg_desc_t my_gdt[6];
+
+	my_gdt[0].raw = NULL;
+
+	my_gdt[1].limit_1=0xffff;
+	my_gdt[1].base_1=0x0000;
+	my_gdt[1].base_2=0x00;
+	my_gdt[1].type=0x5;
 }
